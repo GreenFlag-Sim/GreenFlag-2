@@ -48,11 +48,21 @@
     .practice h2 { margin:0 0 10px; font-size:25px; letter-spacing:-.04em; }
     .practice p { max-width:670px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
     .lap-count { color:var(--green); font:11px var(--mono); letter-spacing:.08em; white-space:nowrap; }
-    .game-link { display:flex; align-items:center; justify-content:space-between; gap:22px; margin-top:24px; padding:22px 25px; border:1px solid var(--line); background:#0b100c; }
-    .game-link h2 { margin:0 0 7px; font-size:20px; letter-spacing:-.04em; }
-    .game-link p { margin:0; color:var(--muted); font-size:12px; line-height:1.7; }
-    .game-link a { flex:none; padding:14px 16px; background:var(--green); color:var(--bg); font:800 10px var(--mono); letter-spacing:.07em; }
-    .game-link a:hover { background:#32f28f; }
+    .game-link { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.72fr); align-items:center; gap:28px; overflow:hidden; min-height:300px; margin-top:38px; padding:38px 42px; border:1px solid #39854f; background:radial-gradient(ellipse at 88% 50%,#123c25 0,#0b1710 48%,#0a100c 82%); box-shadow:inset 0 0 70px #00e6760d; }
+    .game-link:before { position:absolute; top:0; left:0; width:6px; height:100%; background:var(--green); content:""; box-shadow:0 0 24px #00e67688; }
+    .game-link-copy,.game-link-art { position:relative; z-index:1; }
+    .game-link-tag { margin:0 0 13px; color:var(--green); font:10px var(--mono); letter-spacing:.14em; }
+    .game-link h2 { max-width:620px; margin:0 0 12px; font-size:clamp(30px,4.5vw,52px); line-height:.98; letter-spacing:-.065em; }
+    .game-link p { max-width:540px; margin:0 0 23px; color:var(--muted); font-size:13px; line-height:1.75; }
+    .game-link a { display:inline-flex; align-items:center; gap:14px; min-height:52px; padding:0 20px; background:var(--green); color:var(--bg); font:900 10px var(--mono); letter-spacing:.08em; box-shadow:0 8px 28px #00e67622; transition:transform .18s,background .18s; }
+    .game-link a:hover { transform:translateY(-2px); background:#55ffa7; }
+    .game-link a svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .game-link-art svg { display:block; width:100%; overflow:visible; filter:drop-shadow(0 0 15px #00e67618); }
+    .game-link-art .lab-track { fill:none; stroke:#48574b; stroke-width:19; stroke-linecap:round; stroke-linejoin:round; }
+    .game-link-art .lab-highlight { fill:none; stroke:var(--green); stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:9 7; animation:lab-flow 9s linear infinite; }
+    .game-link-art circle { fill:#08100b; stroke:var(--green); stroke-width:3; }
+    .game-link-art text { fill:#b9c6bb; font:9px var(--mono); letter-spacing:1px; }
+    @keyframes lab-flow { to { stroke-dashoffset:-128; } }
     .site-footer { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:18px; border-top:1px solid var(--line); color:var(--subtle); font-size:10px; }
     .site-footer a:hover { color:var(--green); }
     @media(max-width:700px) {
@@ -73,7 +83,11 @@
       .step h3 { margin-top:16px; }
       .corner-note { grid-template-columns:1fr; gap:13px; margin-top:28px; padding:22px; }
       .practice { grid-template-columns:1fr; gap:18px; margin-top:18px; padding:22px; }
-      .game-link { align-items:flex-start; flex-direction:column; padding:20px; }
+      .game-link { grid-template-columns:1fr; gap:12px; min-height:0; margin-top:25px; padding:26px 22px; }
+      .game-link h2 { font-size:34px; }
+      .game-link p { font-size:12px; }
+      .game-link-art { grid-row:1; margin:4px -4px 0; }
+      .game-link-art svg { max-height:170px; }
       .site-footer { min-height:100px; flex-wrap:wrap; padding-block:20px; }
     }
     @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
@@ -116,7 +130,7 @@
       <aside class="corner-note" aria-labelledby="corner-note-title"><div><p class="eyebrow">READ THE WHOLE SECTION</p><h2 id="corner-note-title">Corners work together.</h2></div><p>The same turn can need a different line depending on what comes just before and after it. A previous corner may affect the side of the track you arrive from. If this turn leads onto a long straight, a later apex can help you get on the power sooner. If another turn follows quickly, you may need to give up a little space here to set up the next one. Look at the sequence, not just one corner at a time.</p></aside>
       <div class="practice"><div><h2>A simple first practice</h2><p>Drive five laps at a comfortable pace. For the first few, focus on staying on track. Then choose one corner and try to brake at the same marker each lap. If you make a mistake, reset and try again—every lap is useful practice.</p></div><span class="lap-count">5 CALM LAPS ✳</span></div>
     </section>
-    <section class="game-link" aria-labelledby="game-link-title"><div><h2 id="game-link-title">Ready to read the whole sequence?</h2><p>Try the corner-line challenge and see how the turn before and after can change your choice.</p></div><a href="corner-lines.html">PLAY THE MINI-GAME</a></section>
+    <section class="game-link" aria-labelledby="game-link-title"><div class="game-link-copy"><p class="game-link-tag">24 F1 CIRCUITS · 28 CHALLENGES · DRY + WET</p><h2 id="game-link-title">Can you read the whole lap?</h2><p>Take the full-lap line challenge. Every round changes the circuit and asks you to connect the corner before, the featured turn and the one after it.</p><a href="corner-lines.html">ENTER THE LINE LAB <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a></div><div class="game-link-art" aria-hidden="true"><svg viewBox="0 0 520 190"><path class="lab-track" d="M20 112 C44 112 47 52 94 52 S151 137 196 137 S240 45 291 45 S350 143 391 143 S435 72 500 72"/><path class="lab-highlight" d="M20 112 C44 112 47 52 94 52 S151 137 196 137 S240 45 291 45 S350 143 391 143 S435 72 500 72"/><circle cx="94" cy="52" r="8"/><circle cx="291" cy="45" r="8"/><circle cx="391" cy="143" r="8"/><text x="51" y="30">BEFORE</text><text x="251" y="22">FEATURE TURN</text><text x="370" y="176">AFTER</text></svg></div></section>
   </main>
   <footer class="site-footer shell"><span>Made for the next generation of racers.</span><a href="index.html">BACK TO GREEN FLAG</a></footer>
 </body>
