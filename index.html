@@ -129,7 +129,8 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
 
 .next-section { padding: 72px 0; background: #0c110d; border-block: 1px solid var(--line); }
 .next-inner { display: grid; grid-template-columns: 86px 1fr 56px; gap: 35px; align-items: center; }
-.next-mark { width: 65px; height: 65px; display: grid; place-items: center; border-radius: 3px; background: var(--green); color: var(--black); font-size: 20px; font-weight: 800; letter-spacing: -.1em; transform: skew(-5deg); }
+.next-mark { width: 72px; height: 36px; display: inline-flex; align-items: center; }
+.next-mark svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .next-inner .eyebrow { font-size: 9px; }
 .next-inner h2 { font-size: 43px; }
 .next-inner > div > p:last-child { max-width: 410px; margin: 17px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
@@ -174,7 +175,7 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
   .gear-grid { grid-template-columns: 1fr; gap: 35px; padding-top: 42px; }
   .gear-visual { height: 300px; }
   .next-inner { grid-template-columns: 52px 1fr; gap: 20px; }
-  .next-mark { width: 50px; height: 50px; font-size: 16px; }
+  .next-mark { width: 52px; height: 26px; }
   .next-inner h2 { font-size: 36px; }
   .round-link { grid-column: 2; justify-self: start; margin-top: 4px; }
   .site-footer { min-height: 120px; display: grid; grid-template-columns: 1fr auto; gap: 15px; padding-block: 24px; }
@@ -305,7 +306,7 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
     </section>
 
     <section class="next-section" id="coming-soon">
-      <div class="shell next-inner"><span class="next-mark">GF</span><div><p class="eyebrow">THE GREEN FLAG PROMISE</p><h2>Learn it. Try it.<br><em>Make it your own.</em></h2><p>More beginner guides are on the way. Start with one skill, then come back when you’re ready for the next.</p></div><a class="round-link" href="#top" aria-label="Back to top"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span></a></div>
+      <div class="shell next-inner"><span class="next-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--black)"/></svg></span><div><p class="eyebrow">THE GREEN FLAG PROMISE</p><h2>Learn it. Try it.<br><em>Make it your own.</em></h2><p>More beginner guides are on the way. Start with one skill, then come back when you’re ready for the next.</p></div><a class="round-link" href="#top" aria-label="Back to top"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span></a></div>
     </section>
   </main>
 
