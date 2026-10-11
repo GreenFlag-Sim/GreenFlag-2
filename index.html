@@ -128,19 +128,22 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
 .gear-sticker span { position: absolute; right: 10px; bottom: 7px; font-size: 15px; }
 
 .next-section { padding: 72px 0; background: #0c110d; border-block: 1px solid var(--line); }
-.next-inner { display: grid; grid-template-columns: 86px 1fr 56px; gap: 35px; align-items: center; }
+.next-inner { display: grid; grid-template-columns: 86px 1fr; gap: 35px; align-items: center; }
 .next-mark { width: 64px; height: 64px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--green); color: var(--green); font: 12px var(--mono); letter-spacing: .08em; }
 .next-inner .eyebrow { font-size: 9px; }
 .next-inner h2 { font-size: 43px; }
 .next-inner > div > p:last-child { max-width: 410px; margin: 17px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
-.round-link { width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid #455548; border-radius: 50%; font-size: 20px; transition: .2s; }
-.round-link:hover { border-color: var(--green); background: var(--green); color: var(--black); }
-.site-footer { min-height: 99px; display: flex; align-items: center; justify-content: space-between; color: var(--subtle); font-size: 10px; }
+
+.site-footer { min-height: 99px; position: relative; display: flex; align-items: center; justify-content: space-between; color: var(--subtle); font-size: 10px; }
 .footer-brand { color: var(--ink); font-size: 12px; }
 .footer-brand .brand-mark { width: 62px; height: 31px; }
 .footer-brand .brand-sub { font-size: 8px; }
-.back-top { color: var(--muted); font-size: 9px; }
-.back-top:hover { color: var(--green); }
+.back-top { position: fixed; z-index: 30; right: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 9px; padding: 12px 14px; border: 1px solid #455548; background: rgba(13,18,15,.96); color: var(--muted); font: 10px var(--mono); letter-spacing: .08em; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease; backdrop-filter: blur(8px); }
+.back-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.back-top.is-docked { position: absolute; right: 0; bottom: 18px; }
+.back-top .icon-arrow { width: 15px; height: 15px; color: var(--green); }
+.back-top:hover { border-color: var(--green); color: var(--green); }
+@media (prefers-reduced-motion: reduce) { .back-top { transition: none; } }
 
 @media (max-width: 800px) {
   .shell { width: min(100% - 40px,600px); }
@@ -176,10 +179,10 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
   .next-inner { grid-template-columns: 52px 1fr; gap: 20px; }
   .next-mark { width: 52px; height: 52px; }
   .next-inner h2 { font-size: 36px; }
-  .round-link { grid-column: 2; justify-self: start; margin-top: 4px; }
   .site-footer { min-height: 120px; display: grid; grid-template-columns: 1fr auto; gap: 15px; padding-block: 24px; }
   .site-footer > span { grid-column: 1/-1; grid-row: 2; }
-  .back-top { grid-column: 2; grid-row: 1; }
+  .site-footer { min-height: 168px; padding-bottom: 78px; }
+  .back-top.is-docked { right: 0; bottom: 16px; }
   .footer-brand { grid-column: 1; grid-row: 1; }
 }
 
@@ -206,6 +209,7 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
   .gear-copy h2 { font-size: 42px; }
   .gear-visual { height: 240px; }
   .next-inner { grid-template-columns: 40px 1fr; gap: 14px; }
+  .next-mark { width: 40px; height: 40px; }
   .next-mark { width: 40px; height: 40px; font-size: 13px; }
   .next-inner h2 { font-size: 32px; }
   .next-inner > div > p:last-child { font-size: 11px; }
@@ -305,11 +309,11 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
     </section>
 
     <section class="next-section" id="coming-soon">
-      <div class="shell next-inner"><span class="next-mark" aria-hidden="true">04</span><div><p class="eyebrow">THE GREEN FLAG PROMISE</p><h2>Learn it. Try it.<br><em>Make it your own.</em></h2><p>More beginner guides are on the way. Start with one skill, then come back when you’re ready for the next.</p></div><a class="round-link" href="#top" aria-label="Back to top"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span></a></div>
+      <div class="shell next-inner"><span class="next-mark" aria-hidden="true">04</span><div><p class="eyebrow">THE GREEN FLAG PROMISE</p><h2>Learn it. Try it.<br><em>Make it your own.</em></h2><p>More beginner guides are on the way. Start with one skill, then come back when you’re ready for the next.</p></div></div>
     </section>
   </main>
 
-  <footer class="site-footer shell"><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--black)"/></svg></span><span>GREEN FLAG<span class="brand-sub">SIM RACING, START HERE</span></span></a><span>Made for the next generation of racers.</span><a href="#top" class="back-top">BACK TO TOP <span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span></a></footer>
+  <footer class="site-footer shell"><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--black)"/></svg></span><span>GREEN FLAG<span class="brand-sub">SIM RACING, START HERE</span></span></a><span>Made for the next generation of racers.</span><button type="button" id="back-to-top" class="back-top" aria-label="Back to top"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span><span>BACK TO TOP</span></button></footer>
   <script>
 document.querySelectorAll('[data-image-slot] img').forEach((image) => {
   const slot = image.closest('[data-image-slot]');
@@ -337,6 +341,22 @@ navigation.querySelectorAll('a').forEach((link) => {
     navigation.classList.remove('is-open');
   });
 });
+
+const backTopButton = document.querySelector('#back-to-top');
+const pageFooter = document.querySelector('.site-footer');
+const updateBackToTop = () => {
+  const visible = window.scrollY > 320;
+  const footerTop = pageFooter.getBoundingClientRect().top;
+  backTopButton.classList.toggle('is-visible', visible);
+  backTopButton.classList.toggle('is-docked', visible && footerTop < window.innerHeight - 80);
+};
+window.addEventListener('scroll', updateBackToTop, { passive: true });
+window.addEventListener('resize', updateBackToTop);
+backTopButton.addEventListener('click', () => {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+});
+updateBackToTop();
 
   </script>
 </body>
