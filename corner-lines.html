@@ -3,198 +3,260 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101511">
-  <meta name="description" content="Play Green Flag's sim racing line mini-game. Read the corners before and after, then choose a line.">
+  <meta name="theme-color" content="#080c09">
+  <meta name="description" content="Read the full circuit and choose a racing line that works with the corners around it.">
   <title>Corner Line Challenge — Green Flag</title>
   <style>
-    :root { color-scheme:dark; --bg:#070a08; --panel:#0d120f; --ink:#f1f5ef; --muted:#9ba79d; --subtle:#68746b; --line:#26342a; --green:#00e676; --mono:ui-monospace,SFMono-Regular,Menlo,monospace; --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    :root { color-scheme:dark; --bg:#080c09; --panel:#0d130f; --ink:#edf2ed; --muted:#a0aca3; --subtle:#68756b; --line:#26342a; --green:#00e676; --mono:ui-monospace,SFMono-Regular,Menlo,monospace; --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); }
+    body { min-height:100vh; margin:0; background:radial-gradient(ellipse at 50% 34%,#132018 0,#080c09 62%); color:var(--ink); font-family:var(--sans); }
     a { color:inherit; text-decoration:none; }
-    .shell { width:min(1120px,calc(100% - 48px)); margin-inline:auto; }
-    .site-header { height:82px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
-    .brand { display:flex; align-items:center; gap:12px; font-size:13px; font-weight:800; letter-spacing:.11em; }
-    .brand-mark { width:72px; height:36px; flex:none; }
-    .brand-mark svg { display:block; width:100%; height:100%; }
-    .brand-sub { display:block; margin-top:4px; color:var(--subtle); font:9px var(--mono); letter-spacing:.08em; }
-    .back-link { display:inline-flex; align-items:center; gap:10px; padding:12px 15px; border:1px solid var(--line); color:var(--muted); font:10px var(--mono); letter-spacing:.08em; }
+    .shell { width:min(1240px,calc(100% - 48px)); margin-inline:auto; }
+    .site-header { height:76px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #26342a99; }
+    .brand { display:flex; align-items:center; gap:11px; font-size:12px; font-weight:800; letter-spacing:.11em; }
+    .brand-mark { width:66px; height:33px; flex:none; }
+    .brand-mark svg { width:100%; height:100%; display:block; }
+    .brand-sub { display:block; margin-top:3px; color:var(--subtle); font:8px var(--mono); letter-spacing:.08em; }
+    .back-link { display:inline-flex; align-items:center; gap:9px; padding:11px 13px; border:1px solid var(--line); color:var(--muted); font:9px var(--mono); letter-spacing:.08em; }
     .back-link:hover { border-color:var(--green); color:var(--green); }
-    .back-link svg { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-    main { padding:54px 0 88px; }
-    .eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 16px; color:var(--muted); font:10px var(--mono); letter-spacing:.12em; }
-    .eyebrow::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 14px #00e67677; }
-    .page-head { display:flex; align-items:end; justify-content:space-between; gap:25px; margin-bottom:28px; }
-    h1 { margin:0; font-size:clamp(42px,6vw,68px); line-height:1; letter-spacing:-.075em; }
+    .back-link svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    main { padding:30px 0 52px; }
+    .game-head { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:18px; }
+    .eyebrow { display:flex; align-items:center; gap:9px; margin:0 0 10px; color:var(--muted); font:9px var(--mono); letter-spacing:.12em; }
+    .eyebrow::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 12px #00e67677; }
+    h1 { margin:0; font-size:clamp(34px,4vw,51px); line-height:1; letter-spacing:-.07em; }
     h1 em { color:var(--green); font-family:Georgia,serif; font-weight:400; }
-    .page-head p { max-width:420px; margin:0; color:var(--muted); font-size:13px; line-height:1.8; }
-    .game-card { border:1px solid var(--line); background:linear-gradient(145deg,#0e140f,#090d0a); }
-    .game-top { display:flex; justify-content:space-between; gap:16px; padding:18px 22px; border-bottom:1px solid var(--line); color:var(--muted); font:10px var(--mono); letter-spacing:.08em; }
-    .progress { color:var(--green); }
-    .scenario { padding:24px 24px 18px; }
-    .scenario h2 { margin:0 0 9px; font-size:clamp(20px,3vw,27px); letter-spacing:-.04em; }
-    .scenario p { max-width:800px; margin:0; color:var(--muted); font-size:13px; line-height:1.8; }
-    .track-wrap { margin:0 20px; overflow:hidden; border:1px solid var(--line); background:#080d09; }
-    .track { display:block; width:100%; height:auto; min-height:210px; }
-    .track-label { fill:#a8b3aa; font:10px var(--mono); letter-spacing:1px; }
-    .road { fill:none; stroke:#3a433c; stroke-width:74; stroke-linecap:round; stroke-linejoin:round; }
-    .edge { fill:none; stroke:#bac2bb; stroke-width:2; stroke-dasharray:10 12; opacity:.48; }
-    .focus-zone { fill:none; stroke:#00e676; stroke-width:83; opacity:.12; }
-    .route { fill:none; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; opacity:.92; transition:opacity .2s,stroke-width .2s; }
-    .route-a { stroke:#57b9ff; stroke-dasharray:2 0; }
-    .route-b { stroke:#ffca58; stroke-dasharray:11 7; }
-    .route-c { stroke:#e795ff; stroke-dasharray:3 7; }
-    .route.dim { opacity:.22; }
-    .route.chosen { stroke-width:8; opacity:1; }
-    .route-key { fill:#f1f5ef; font:800 13px var(--mono); paint-order:stroke; stroke:#080d09; stroke-width:4px; }
-    .track-note { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 18px; padding:12px 18px; color:var(--subtle); font:9px var(--mono); letter-spacing:.08em; }
-    .choices { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:18px 20px 20px; }
-    .choice { min-height:76px; display:grid; grid-template-columns:32px 1fr; align-items:center; gap:12px; padding:14px; border:1px solid var(--line); background:#0a0f0b; color:var(--ink); text-align:left; font:12px/1.55 var(--sans); cursor:pointer; transition:border-color .2s,background .2s,transform .2s; }
-    .choice:hover { border-color:#68746b; transform:translateY(-2px); }
-    .choice:focus-visible,.next:focus-visible,.restart:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
-    .choice[aria-pressed="true"] { border-color:var(--green); background:#0d1911; }
-    .choice:disabled { cursor:default; opacity:.65; transform:none; }
-    .choice-letter { display:grid; width:30px; height:30px; place-items:center; border:1px solid currentColor; font:11px var(--mono); }
-    .choice[data-line="a"] .choice-letter { color:#57b9ff; }
-    .choice[data-line="b"] .choice-letter { color:#ffca58; }
-    .choice[data-line="c"] .choice-letter { color:#e795ff; }
-    .result { display:none; margin:0 20px 20px; padding:18px 20px; border-left:2px solid var(--green); background:#0b140e; }
-    .result.is-visible { display:flex; align-items:center; justify-content:space-between; gap:22px; }
-    .result h3 { margin:0 0 6px; color:var(--green); font:11px var(--mono); letter-spacing:.08em; }
-    .result p { max-width:760px; margin:0; color:var(--muted); font-size:12px; line-height:1.75; }
-    .next,.restart { flex:none; border:0; padding:13px 15px; background:var(--green); color:var(--bg); font:800 10px var(--mono); letter-spacing:.06em; cursor:pointer; }
-    .next:hover,.restart:hover { background:#32f28f; }
-    .game-foot { display:flex; justify-content:space-between; gap:15px; padding:16px 22px; border-top:1px solid var(--line); color:var(--subtle); font:9px var(--mono); letter-spacing:.06em; }
-    .game-foot strong { color:var(--green); font-weight:400; }
-    .site-footer { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:18px; border-top:1px solid var(--line); color:var(--subtle); font-size:10px; }
+    .game-head-copy { max-width:450px; margin:0; color:var(--muted); font-size:12px; line-height:1.7; }
+    .game-field { position:relative; overflow:hidden; border:1px solid #394b3d; background:linear-gradient(145deg,#0c130e,#080c09 72%); box-shadow:0 22px 80px #0007,inset 0 0 45px #00e67608; }
+    .field-top { display:flex; align-items:center; justify-content:space-between; gap:15px; min-height:48px; padding:0 18px; border-bottom:1px solid var(--line); background:#0b110d; color:var(--muted); font:9px var(--mono); letter-spacing:.1em; }
+    .live-dot { display:inline-flex; align-items:center; gap:8px; }
+    .live-dot::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 9px var(--green); }
+    .field-layout { display:grid; grid-template-columns:minmax(0,1fr) 310px; min-height:500px; }
+    .map-panel { position:relative; display:flex; min-width:0; align-items:center; justify-content:center; padding:28px 20px 40px; background-image:linear-gradient(#26342a22 1px,transparent 1px),linear-gradient(90deg,#26342a22 1px,transparent 1px); background-size:34px 34px; }
+    .map-panel::after { content:""; position:absolute; inset:12px; border:1px solid #26342a66; pointer-events:none; }
+    .map-svg { position:relative; z-index:1; display:block; width:min(100%,760px); height:auto; max-height:440px; overflow:visible; }
+    .road-shadow { fill:none; stroke:#020403; stroke-width:64; stroke-linecap:round; stroke-linejoin:round; }
+    .road { fill:none; stroke:#414b43; stroke-width:56; stroke-linecap:round; stroke-linejoin:round; }
+    .road-edge { fill:none; stroke:#c4ccc5; stroke-width:2; stroke-dasharray:11 12; stroke-linecap:round; opacity:.46; }
+    .corner-halo { fill:none; stroke:var(--green); stroke-width:76; stroke-linecap:round; stroke-linejoin:round; opacity:.13; }
+    .route { fill:none; stroke-width:4.4; stroke-linecap:round; stroke-linejoin:round; opacity:.92; transition:opacity .25s,stroke-width .25s; }
+    .route-a { stroke:#55b9ff; }
+    .route-b { stroke:#ffc857; stroke-dasharray:9 5; }
+    .route-c { stroke:#e799ff; stroke-dasharray:2 6; }
+    .route.dim { opacity:.14; }
+    .route.chosen { opacity:1; stroke-width:8; filter:drop-shadow(0 0 5px currentColor); }
+    .turn-marker { fill:#080c09; stroke:var(--green); stroke-width:3; }
+    .marker-text { fill:#edf2ed; font:800 11px var(--mono); text-anchor:middle; dominant-baseline:central; }
+    .point-label { fill:#d9e1da; font:10px var(--mono); letter-spacing:1px; paint-order:stroke; stroke:#080c09; stroke-width:4px; }
+    .start-dot { fill:var(--green); stroke:#080c09; stroke-width:4; }
+    .map-legend { position:absolute; z-index:2; bottom:14px; left:20px; display:flex; flex-wrap:wrap; gap:15px; color:var(--muted); font:8px var(--mono); letter-spacing:.07em; }
+    .legend-item { display:inline-flex; align-items:center; gap:6px; }
+    .swatch { width:20px; height:3px; background:currentColor; }
+    .swatch.a { color:#55b9ff; }
+    .swatch.b { color:#ffc857; background:repeating-linear-gradient(90deg,currentColor 0 7px,transparent 7px 10px); }
+    .swatch.c { color:#e799ff; background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px); }
+    .decision-panel { display:flex; flex-direction:column; padding:23px 20px 18px; border-left:1px solid var(--line); background:linear-gradient(180deg,#101812,#0b100c); }
+    .layout-count { margin:0 0 18px; color:var(--green); font:9px var(--mono); letter-spacing:.11em; }
+    .decision-panel h2 { margin:0 0 12px; font-size:23px; line-height:1.12; letter-spacing:-.045em; }
+    .question { margin:0 0 19px; color:var(--muted); font-size:12px; line-height:1.75; }
+    .sequence { display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px; margin:0 0 20px; }
+    .sequence span { padding:8px 5px; border:1px solid var(--line); color:var(--subtle); text-align:center; font:7px var(--mono); letter-spacing:.05em; }
+    .sequence span:nth-child(2) { border-color:#2c6845; color:var(--green); background:#0d1b12; }
+    .choose-label { margin:0 0 8px; color:var(--subtle); font:8px var(--mono); letter-spacing:.1em; }
+    .choices { display:grid; gap:7px; }
+    .choice { display:grid; grid-template-columns:29px 1fr; align-items:center; gap:10px; min-height:48px; padding:8px 10px; border:1px solid var(--line); background:#0a0f0b; color:var(--ink); text-align:left; font:11px var(--sans); cursor:pointer; transition:border-color .18s,background .18s; }
+    .choice:hover { border-color:#738076; background:#111a13; }
+    .choice:focus-visible,.action:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+    .choice[aria-pressed="true"] { border-color:var(--green); background:#102016; }
+    .choice:disabled { cursor:default; }
+    .choice-mark { display:grid; width:26px; height:26px; place-items:center; border:1px solid currentColor; font:10px var(--mono); }
+    .choice[data-line="a"] .choice-mark { color:#55b9ff; }
+    .choice[data-line="b"] .choice-mark { color:#ffc857; }
+    .choice[data-line="c"] .choice-mark { color:#e799ff; }
+    .result { display:none; margin-top:12px; padding:13px 12px; border-left:2px solid var(--green); background:#0a150d; }
+    .result.is-visible { display:block; }
+    .result h3 { margin:0 0 6px; color:var(--green); font:9px var(--mono); letter-spacing:.06em; }
+    .result p { margin:0; color:var(--muted); font-size:10px; line-height:1.7; }
+    .action-row { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:auto; padding-top:18px; }
+    .score { color:var(--subtle); font:9px var(--mono); letter-spacing:.08em; }
+    .score strong { color:var(--green); font-weight:400; }
+    .action { border:0; padding:12px 13px; background:var(--green); color:#071009; font:800 9px var(--mono); letter-spacing:.07em; cursor:pointer; }
+    .action:hover { background:#36f28c; }
+    .field-bottom { display:flex; justify-content:space-between; gap:14px; padding:12px 18px; border-top:1px solid var(--line); color:var(--subtle); font:8px var(--mono); letter-spacing:.08em; }
+    .site-footer { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:16px; color:var(--subtle); font-size:10px; }
     .site-footer a:hover { color:var(--green); }
-    @media(max-width:700px) {
-      .shell { width:calc(100% - 32px); }
-      .site-header { height:72px; }
-      .brand { gap:8px; font-size:11px; }
-      .brand-mark { width:58px; height:30px; }
-      .brand-sub { font-size:7px; }
-      .back-link { padding:10px 11px; font-size:9px; }
-      main { padding:40px 0 64px; }
-      .page-head { display:block; }
-      .page-head p { margin-top:15px; }
-      .game-top { padding:14px; }
-      .scenario { padding:20px 16px 15px; }
-      .track-wrap { margin:0 10px; }
-      .track { min-height:145px; }
-      .track-label { font-size:12px; }
-      .route-key { font-size:16px; }
-      .track-note { padding:10px; font-size:8px; }
-      .choices { grid-template-columns:1fr; gap:8px; padding:14px 10px; }
-      .choice { min-height:58px; }
-      .result { margin:0 10px 14px; padding:16px; }
-      .result.is-visible { align-items:flex-start; flex-direction:column; }
-      .game-foot { padding:14px; }
-      .site-footer { min-height:100px; flex-wrap:wrap; padding-block:20px; }
+    @media(max-width:820px) {
+      .field-layout { grid-template-columns:1fr; }
+      .map-panel { min-height:370px; padding:20px 16px 42px; }
+      .map-svg { max-height:400px; }
+      .decision-panel { display:grid; grid-template-columns:1fr 1fr; column-gap:20px; border-left:0; border-top:1px solid var(--line); }
+      .layout-count,.decision-panel h2,.question,.sequence { grid-column:1/-1; }
+      .layout-count { margin-bottom:10px; }
+      .decision-panel h2 { margin-bottom:7px; }
+      .question { margin-bottom:14px; }
+      .sequence { margin-bottom:14px; }
+      .choose-label,.choices,.result,.action-row { grid-column:1/-1; }
+      .choices { grid-template-columns:repeat(3,1fr); }
+      .choice { grid-template-columns:25px 1fr; }
+      .action-row { margin-top:2px; }
+    }
+    @media(max-width:560px) {
+      .shell { width:calc(100% - 28px); }
+      .site-header { height:68px; }
+      .brand { gap:7px; font-size:10px; }
+      .brand-mark { width:52px; height:27px; }
+      .brand-sub { font-size:6px; }
+      .back-link { padding:9px; font-size:8px; }
+      main { padding:24px 0 35px; }
+      .game-head { display:block; margin-bottom:14px; }
+      h1 { font-size:38px; }
+      .game-head-copy { margin-top:10px; font-size:11px; }
+      .field-top { min-height:42px; padding-inline:12px; font-size:8px; }
+      .map-panel { min-height:270px; padding:20px 8px 39px; }
+      .map-panel::after { inset:7px; }
+      .map-svg { width:100%; }
+      .point-label { font-size:12px; }
+      .map-legend { left:11px; bottom:12px; gap:10px; font-size:7px; }
+      .decision-panel { padding:18px 14px 14px; }
+      .decision-panel h2 { font-size:20px; }
+      .question { font-size:11px; }
+      .choices { grid-template-columns:1fr; }
+      .choice { min-height:44px; }
+      .field-bottom { padding:10px 12px; font-size:7px; }
+      .site-footer { min-height:68px; font-size:9px; }
     }
     @media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition:none !important; } }
   </style>
 </head>
 <body>
   <header class="site-header shell">
-    <a class="brand" href="index.html" aria-label="Green Flag home">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--bg)"/></svg></span>
-      <span>GREEN FLAG<span class="brand-sub">SIM RACING, START HERE</span></span>
-    </a>
+    <a class="brand" href="index.html" aria-label="Green Flag home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--bg)"/></svg></span><span>GREEN FLAG<span class="brand-sub">SIM RACING, START HERE</span></span></a>
     <a class="back-link" href="find-your-rhythm.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg> BACK TO GUIDE</a>
   </header>
   <main class="shell">
-    <p class="eyebrow">GREEN FLAG / TRACK READING</p>
-    <div class="page-head"><h1>Corner line <em>challenge.</em></h1><p>Look at the turn before, the one you’re driving now, and the one coming next. Then pick the line that best fits the whole sequence.</p></div>
-    <section class="game-card" aria-labelledby="scenario-title">
-      <div class="game-top"><span>READ THE TRACK</span><span class="progress" id="progress">CHALLENGE 1 / 3</span></div>
-      <div class="scenario"><h2 id="scenario-title"></h2><p id="scenario-copy"></p></div>
-      <div class="track-wrap">
-        <svg class="track" viewBox="0 0 600 270" role="img" aria-labelledby="track-title track-desc">
-          <title id="track-title">Three linked corners with three possible racing lines</title>
-          <desc id="track-desc">The driving direction goes from left to right through the preceding corner, the target turn, and the next corner.</desc>
-          <path class="road" d="M15 166 L82 166 C123 166 115 83 160 83 L215 83 C258 83 258 213 302 213 L360 213 C403 213 396 126 441 126 L585 126"/>
-          <path class="edge" d="M15 166 L82 166 C123 166 115 83 160 83 L215 83 C258 83 258 213 302 213 L360 213 C403 213 396 126 441 126 L585 126"/>
-          <path class="focus-zone" d="M215 83 C258 83 258 213 302 213"/>
-          <text class="track-label" x="38" y="235">BEFORE</text><text class="track-label" x="222" y="253">YOUR TURN</text><text class="track-label" x="406" y="75">NEXT</text>
-          <path id="route-a" class="route route-a" d="M15 158 L82 158 C120 158 119 92 160 92 L215 92 C247 92 252 186 288 221 C319 249 342 209 360 209 C397 209 402 135 441 135 L585 135"/>
-          <path id="route-b" class="route route-b" d="M15 174 L82 174 C130 174 108 73 160 73 L215 73 C277 73 270 230 302 230 C339 230 343 205 360 205 C407 205 389 117 441 117 L585 117"/>
-          <path id="route-c" class="route route-c" d="M15 166 L82 166 C126 166 111 84 160 84 L215 84 C266 84 246 224 302 216 C342 210 344 221 360 221 C400 221 397 127 441 127 L585 127"/>
-          <text class="route-key" x="270" y="192">A</text><text class="route-key" x="272" y="239">B</text><text class="route-key" x="318" y="197">C</text>
-        </svg>
-        <div class="track-note"><span>DRIVING DIRECTION: LEFT TO RIGHT</span><span>GREEN AREA MARKS YOUR TURN</span></div>
+    <div class="game-head"><div><p class="eyebrow">GREEN FLAG / TRACK READING</p><h1>Corner line <em>challenge.</em></h1></div><p class="game-head-copy">Study the full circuit. The green marker shows the turn in question; the turns before and after it help decide which line works best.</p></div>
+    <section class="game-field" aria-label="Racing line mini-game">
+      <div class="field-top"><span class="live-dot">TRACK LAB / LIVE SESSION</span><span id="layout-name">ROOKIE LOOP</span></div>
+      <div class="field-layout">
+        <div class="map-panel">
+          <svg class="map-svg" id="map" viewBox="0 0 600 430" role="img" aria-labelledby="map-title map-description">
+            <title id="map-title">Full circuit with three possible racing lines</title><desc id="map-description">The whole circuit is shown. The green marker identifies the turn to study. The other numbered markers show the corners before and after.</desc>
+            <path id="road-shadow" class="road-shadow"/>
+            <path id="road" class="road"/>
+            <path id="road-edge" class="road-edge"/>
+            <path id="corner-halo" class="corner-halo"/>
+            <path id="route-a" class="route route-a"/>
+            <path id="route-b" class="route route-b"/>
+            <path id="route-c" class="route route-c"/>
+            <circle id="start-dot" class="start-dot" r="7"/>
+            <text id="start-label" class="point-label">START</text>
+            <g id="turn-markers"></g>
+          </svg>
+          <div class="map-legend"><span class="legend-item"><i class="swatch a"></i>A / EARLY</span><span class="legend-item"><i class="swatch b"></i>B / LINK</span><span class="legend-item"><i class="swatch c"></i>C / LATE</span></div>
+        </div>
+        <aside class="decision-panel">
+          <p class="layout-count" id="layout-count">LAYOUT 01 / 10</p>
+          <h2 id="scenario-title"></h2>
+          <p class="question" id="scenario-copy"></p>
+          <div class="sequence" aria-label="Corner sequence"><span id="before-label">BEFORE</span><span id="focus-label">YOUR TURN</span><span id="after-label">AFTER</span></div>
+          <p class="choose-label">WHICH LINE FITS THE WHOLE SEQUENCE?</p>
+          <div class="choices" role="group" aria-label="Choose a racing line">
+            <button class="choice" type="button" data-line="a" aria-pressed="false"><span class="choice-mark">A</span><span>Early apex</span></button>
+            <button class="choice" type="button" data-line="b" aria-pressed="false"><span class="choice-mark">B</span><span>Link the corners</span></button>
+            <button class="choice" type="button" data-line="c" aria-pressed="false"><span class="choice-mark">C</span><span>Later apex</span></button>
+          </div>
+          <div class="result" id="result" aria-live="polite"><h3 id="result-title"></h3><p id="result-copy"></p></div>
+          <div class="action-row"><span class="score">SCORE <strong id="score">0 / 0</strong></span><button class="action" id="next" type="button">NEXT LAYOUT</button></div>
+        </aside>
       </div>
-      <div class="choices" role="group" aria-label="Choose a racing line">
-        <button class="choice" type="button" data-line="a" aria-pressed="false"><span class="choice-letter">A</span><span>Choose this line</span></button>
-        <button class="choice" type="button" data-line="b" aria-pressed="false"><span class="choice-letter">B</span><span>Choose this line</span></button>
-        <button class="choice" type="button" data-line="c" aria-pressed="false"><span class="choice-letter">C</span><span>Choose this line</span></button>
-      </div>
-      <div class="result" id="result" aria-live="polite"><div><h3 id="result-title"></h3><p id="result-copy"></p></div><button class="next" id="next" type="button">NEXT CHALLENGE</button></div>
-      <div class="game-foot"><span>NO NEED TO RUSH. READ THE SEQUENCE.</span><span>SCORE <strong id="score">0 / 0</strong></span></div>
+      <div class="field-bottom"><span>USE THE FULL TRACK</span><span id="session-progress">01 OF 10 / READ THE SEQUENCE</span></div>
     </section>
   </main>
   <footer class="site-footer shell"><span>Made for the next generation of racers.</span><a href="find-your-rhythm.html">BACK TO THE GUIDE</a></footer>
   <script>
-    const rounds = [
-      { title:'A quick left-right sequence.', copy:'The corner before puts you on the outside for this right turn. A left turn follows immediately. Which line connects the two turns smoothly and leaves the car ready for the next apex?', answer:'c', explanation:'Line C links the corners. It gives up a little perfection in this turn so the car is placed well for the left that follows. Treat the pair as one sequence.' },
-      { title:'A long straight comes after this turn.', copy:'The corner before is a gentle left. Your highlighted turn is right, and after it the track stays straight for a long time. Which line helps you leave the turn cleanly and get back on the power?', answer:'b', explanation:'Line B uses a later apex. That can straighten the exit and help you accelerate sooner onto the long straight. Exit speed matters because you carry it down the whole straight.' },
-      { title:'The next corner is the one that matters most.', copy:'The turn before is tight, and the highlighted corner opens onto another turn straight away. You want a calm, predictable transition. Which line keeps the whole section flowing instead of attacking just one apex?', answer:'a', explanation:'Line A makes a smooth transition through this section. The best choice depends on the whole sequence: a clean setup for the next turn is often worth more than a perfect-looking line through this one.' }
+    const layouts = [
+      {name:'ROOKIE LOOP',points:[[302,54],[429,61],[510,122],[518,218],[458,319],[327,355],[193,337],[83,353],[47,265],[65,158],[133,87],[231,66]],focus:2,title:'A tight turn leads onto the longest straight.',copy:'The corner before brings you toward the outside of the marked turn. A long straight follows it. Which line gives you the cleanest exit so you can accelerate early?',answer:'c',explanation:'The later apex gives you more room to straighten the exit and get on the power sooner. That speed carries down the long straight.'},
+      {name:'SWITCHBACK',points:[[286,48],[407,67],[503,120],[458,177],[507,235],[455,322],[337,365],[211,342],[111,296],[60,209],[112,145],[203,104]],focus:4,title:'Two opposite turns arrive close together.',copy:'The marked turn is part of a quick left-right switchback. A perfect line through this turn can leave you badly placed for the next one. What should your line do?',answer:'b',explanation:'Link the turns. A small compromise through the marked corner can place the car well for the next apex and make the whole sequence faster and calmer.'},
+      {name:'LONG BEND',points:[[300,45],[430,54],[519,116],[525,218],[463,310],[360,366],[231,357],[104,318],[55,232],[73,132],[154,68]],focus:3,title:'A long bend is followed by a short straight.',copy:'The turn before is gentle, and the marked corner keeps curving for a while before the short straight. Which line helps you avoid pinching the exit?',answer:'c',explanation:'A later apex leaves more room to unwind the steering and accelerate onto the short straight. Avoid sacrificing the whole exit to attack one early apex.'},
+      {name:'HAIRPIN EXIT',points:[[297,48],[419,58],[515,111],[530,189],[459,229],[358,229],[291,177],[221,231],[139,312],[75,287],[64,196],[123,102],[214,63]],focus:6,title:'A hairpin feeds into a fast direction change.',copy:'The marked hairpin is followed almost immediately by a fast bend the other way. Which line helps you leave the hairpin positioned for that next change?',answer:'b',explanation:'Link the corners. Use the hairpin exit to position the car for the fast bend that follows. The ideal line through one turn depends on the next turn.'},
+      {name:'THE S-SECTION',points:[[300,50],[423,57],[513,104],[501,163],[442,197],[505,237],[475,311],[390,357],[281,365],[173,344],[81,300],[52,216],[91,138],[191,82]],focus:5,title:'An S-section rewards a smooth rhythm.',copy:'The marked turn sits between two quick direction changes. You do not need to use every curb. Which line avoids a sharp correction and keeps the car settled?',answer:'b',explanation:'Link the corners with a smooth, predictable line. A calm transition through an S-section is easier to repeat than a series of aggressive snaps.'},
+      {name:'STRAIGHT AND STOP',points:[[300,42],[445,50],[527,94],[531,164],[457,204],[376,206],[323,164],[264,211],[194,298],[105,340],[54,291],[64,206],[130,141],[207,72]],focus:7,title:'A slow corner opens onto a long straight.',copy:'You arrive from a fast section, then the marked slow corner leads onto a long straight. Where should you aim your apex?',answer:'c',explanation:'A later apex helps open the exit. A clean, straighter run onto the long straight usually matters more than carrying a little extra speed into the corner.'},
+      {name:'TRIPLE LEFT',points:[[302,48],[418,57],[512,111],[516,198],[477,285],[408,352],[312,365],[221,341],[122,356],[60,299],[62,213],[114,131],[205,75]],focus:7,title:'A corner before and after shape your entry.',copy:'The turn before leaves you on the inside edge of the marked corner, and another left follows soon after. Which line helps you connect both turns without a sudden weave?',answer:'b',explanation:'Link the corners. Make a smooth transition that sets up the following left. The best racing line is shaped by where the car comes from and where it needs to go next.'},
+      {name:'THE OFFSET',points:[[301,48],[427,56],[523,106],[515,186],[459,240],[507,304],[436,356],[326,366],[227,341],[146,356],[70,304],[54,212],[99,130],[198,76]],focus:5,title:'A short kink comes right before a tight turn.',copy:'The corner before bends the car toward one side; the marked turn tightens and leads toward the next section. Which line gives you room to slow down, rotate, and leave cleanly?',answer:'c',explanation:'A later apex helps keep the car controlled through the tighter turn and opens the exit. The kink before it also affects where you can safely begin turning.'},
+      {name:'FINAL SECTOR',points:[[300,48],[428,54],[513,112],[500,190],[448,237],[498,293],[435,351],[339,362],[257,324],[179,359],[92,329],[49,249],[81,167],[153,101],[237,72]],focus:4,title:'The marked corner sets up the final complex.',copy:'There are two more turns after the marked corner. Your lap time depends on exiting the whole complex well. Which line should you choose?',answer:'b',explanation:'Link the corners and prioritize the final exit. Sometimes you give up a little at the first apex to get a better position for the last turn and the straight after it.'},
+      {name:'CLUB CIRCUIT',points:[[300,43],[435,51],[530,103],[531,182],[483,248],[521,319],[431,365],[321,345],[243,367],[151,337],[71,350],[48,266],[77,181],[55,111],[154,64]],focus:9,title:'A tight turn arrives after a fast approach.',copy:'The previous corner is quick, then the marked turn is much tighter. You need to slow the car and leave it pointed toward the exit. Which line gives you room to do that?',answer:'c',explanation:'A later apex can help you finish the rotation and open the exit after slowing for the tighter turn. The fastest lap comes from a clean, repeatable line, not a last-second lunge.'}
     ];
-    let roundIndex = 0;
-    let score = 0;
-    let answered = 0;
-    let locked = false;
-    const progress = document.querySelector('#progress');
-    const title = document.querySelector('#scenario-title');
-    const copy = document.querySelector('#scenario-copy');
-    const result = document.querySelector('#result');
-    const resultTitle = document.querySelector('#result-title');
-    const resultCopy = document.querySelector('#result-copy');
-    const scoreNode = document.querySelector('#score');
-    const nextButton = document.querySelector('#next');
-    const choices = [...document.querySelectorAll('.choice')];
-    const routePaths = ['a','b','c'].map((letter) => document.querySelector(`#route-${letter}`));
+    const routeStyles = {
+      a:{ early:17, middle:2, late:0 },
+      b:{ early:8, middle:12, late:8 },
+      c:{ early:3, middle:7, late:18 }
+    };
+    let layoutIndex=0, score=0, answered=0, locked=false;
+    const svgNS='http://www.w3.org/2000/svg';
+    const $=(selector)=>document.querySelector(selector);
+    const scoreNode=$('#score'), result=$('#result'), nextButton=$('#next');
 
-    function loadRound() {
-      locked = false;
-      const round = rounds[roundIndex];
-      progress.textContent = `CHALLENGE ${roundIndex + 1} / ${rounds.length}`;
-      title.textContent = round.title;
-      copy.textContent = round.copy;
-      result.classList.remove('is-visible');
-      routePaths.forEach((path) => path.classList.remove('chosen','dim'));
-      choices.forEach((button) => { button.disabled = false; button.setAttribute('aria-pressed','false'); });
-      nextButton.textContent = 'NEXT CHALLENGE';
+    function smoothPath(points) {
+      const n=points.length, t=0.72;
+      let d=`M ${points[0][0]} ${points[0][1]}`;
+      for(let i=0;i<n;i++){
+        const p0=points[i], p1=points[(i+1)%n], prev=points[(i-1+n)%n], next=points[(i+2)%n];
+        const c1=[p0[0]+(p1[0]-prev[0])*t/6,p0[1]+(p1[1]-prev[1])*t/6];
+        const c2=[p1[0]-(next[0]-p0[0])*t/6,p1[1]-(next[1]-p0[1])*t/6];
+        d+=` C ${c1[0]} ${c1[1]} ${c2[0]} ${c2[1]} ${p1[0]} ${p1[1]}`;
+      }
+      return d+' Z';
     }
 
-    choices.forEach((button) => button.addEventListener('click', () => {
-      if (locked) return;
-      locked = true;
-      const pick = button.dataset.line;
-      const round = rounds[roundIndex];
-      const correct = pick === round.answer;
-      answered += 1;
-      if (correct) score += 1;
-      scoreNode.textContent = `${score} / ${answered}`;
-      choices.forEach((item) => { item.disabled = true; item.setAttribute('aria-pressed', String(item === button)); });
-      routePaths.forEach((path,index) => { const letter = ['a','b','c'][index]; path.classList.toggle('chosen',letter === round.answer); path.classList.toggle('dim',letter !== round.answer); });
-      resultTitle.textContent = correct ? 'NICE READ — THAT’S THE ONE' : `GOOD TRY — LINE ${round.answer.toUpperCase()} FITS BEST`;
-      resultCopy.textContent = round.explanation;
-      result.classList.add('is-visible');
-      nextButton.textContent = roundIndex === rounds.length - 1 ? 'PLAY AGAIN' : 'NEXT CHALLENGE';
+    function signedArea(points){let a=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];a+=p[0]*q[1]-q[0]*p[1]}return a/2}
+    function insideNormals(points){
+      const orientation=Math.sign(signedArea(points))||1;
+      return points.map((p,i)=>{const prev=points[(i-1+points.length)%points.length],next=points[(i+1)%points.length];let dx=next[0]-prev[0],dy=next[1]-prev[1],len=Math.hypot(dx,dy)||1;return [-orientation*dy/len,orientation*dx/len]})
+    }
+    function linePoints(layout, letter){
+      const pts=layout.points.map(p=>[...p]), norms=insideNormals(pts), n=pts.length, f=layout.focus, plan=routeStyles[letter];
+      const shifts=[plan.early,plan.middle,plan.late];
+      [-1,0,1].forEach((delta,i)=>{const k=(f+delta+n)%n;pts[k]=[pts[k][0]+norms[k][0]*shifts[i],pts[k][1]+norms[k][1]*shifts[i]]});
+      return pts;
+    }
+    function markTurn(group,point,label,focus=false){
+      const g=document.createElementNS(svgNS,'g');g.setAttribute('transform',`translate(${point[0]} ${point[1]})`);
+      const c=document.createElementNS(svgNS,'circle');c.setAttribute('r',focus?'14':'10');c.setAttribute('class','turn-marker');if(!focus)c.setAttribute('stroke','#c4ccc5');
+      const t=document.createElementNS(svgNS,'text');t.setAttribute('class','marker-text');t.textContent=label;g.append(c,t);group.append(g);
+    }
+    function loadLayout(){
+      locked=false;const layout=layouts[layoutIndex], path=smoothPath(layout.points);
+      $('#layout-name').textContent=layout.name;$('#layout-count').textContent=`LAYOUT ${String(layoutIndex+1).padStart(2,'0')} / ${layouts.length}`;
+      $('#scenario-title').textContent=layout.title;$('#scenario-copy').textContent=layout.copy;
+      $('#session-progress').textContent=`${String(layoutIndex+1).padStart(2,'0')} OF ${layouts.length} / READ THE SEQUENCE`;
+      ['road-shadow','road','road-edge'].forEach(id=>document.getElementById(id).setAttribute('d',path));
+      const f=layout.focus, n=layout.points.length;
+      const prev=layout.points[(f-1+n)%n], target=layout.points[f], after=layout.points[(f+1)%n];
+      $('#corner-halo').setAttribute('d',smoothPath([prev,target,after]));
+      ['a','b','c'].forEach(letter=>document.getElementById(`route-${letter}`).setAttribute('d',smoothPath(linePoints(layout,letter))));
+      const start=layout.points[0];$('#start-dot').setAttribute('cx',start[0]);$('#start-dot').setAttribute('cy',start[1]);$('#start-label').setAttribute('x',start[0]+12);$('#start-label').setAttribute('y',start[1]-12);
+      const markers=$('#turn-markers');markers.replaceChildren();
+      markTurn(markers,prev,String((f-1+n)%n+1));markTurn(markers,target,String(f+1),true);markTurn(markers,after,String((f+1)%n+1));
+      $('#before-label').textContent=`TURN ${String((f-1+n)%n+1).padStart(2,'0')} / BEFORE`;
+      $('#focus-label').textContent=`TURN ${String(f+1).padStart(2,'0')} / FOCUS`;
+      $('#after-label').textContent=`TURN ${String((f+1)%n+1).padStart(2,'0')} / NEXT`;
+      result.classList.remove('is-visible');document.querySelectorAll('.choice').forEach(button=>{button.disabled=false;button.setAttribute('aria-pressed','false')});
+      document.querySelectorAll('.route').forEach(route=>route.classList.remove('chosen','dim'));
+      nextButton.textContent=layoutIndex===layouts.length-1?'FINISH SESSION':'NEXT LAYOUT';
+    }
+    document.querySelectorAll('.choice').forEach(button=>button.addEventListener('click',()=>{
+      if(locked)return;locked=true;const layout=layouts[layoutIndex],pick=button.dataset.line,correct=pick===layout.answer;answered++;if(correct)score++;
+      scoreNode.textContent=`${score} / ${answered}`;
+      document.querySelectorAll('.choice').forEach(b=>{b.disabled=true;b.setAttribute('aria-pressed',String(b===button))});
+      ['a','b','c'].forEach(letter=>{const route=document.getElementById(`route-${letter}`);route.classList.toggle('chosen',letter===layout.answer);route.classList.toggle('dim',letter!==layout.answer)});
+      $('#result-title').textContent=correct?'GOOD READ / THAT LINE FITS':'REVIEW THE SEQUENCE / LINE '+layout.answer.toUpperCase()+' FITS BEST';
+      $('#result-copy').textContent=layout.explanation;result.classList.add('is-visible');
     }));
-
-    nextButton.addEventListener('click', () => {
-      if (roundIndex === rounds.length - 1) {
-        roundIndex = 0;
-        score = 0;
-        answered = 0;
-        scoreNode.textContent = '0 / 0';
-      } else roundIndex += 1;
-      loadRound();
-      document.querySelector('.game-card').scrollIntoView({behavior:'smooth',block:'start'});
+    nextButton.addEventListener('click',()=>{
+      if(layoutIndex===layouts.length-1){layoutIndex=0;score=0;answered=0;scoreNode.textContent='0 / 0'}else layoutIndex++;
+      loadLayout();
     });
-
-    loadRound();
+    loadLayout();
   </script>
 </body>
 </html>
