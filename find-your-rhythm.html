@@ -40,7 +40,11 @@
     .step-number { color:var(--green); font:10px var(--mono); letter-spacing:.1em; }
     .step h3 { margin:25px 0 10px; font-size:19px; letter-spacing:-.03em; }
     .step p { margin:0; color:var(--muted); font-size:12px; line-height:1.75; }
-    .practice { display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; margin-top:48px; padding:30px; border:1px solid #254330; background:#0b140e; }
+    .corner-note { display:grid; grid-template-columns:.75fr 1.25fr; gap:32px; align-items:start; margin-top:38px; padding:27px 30px; border-left:2px solid var(--green); background:#0b100c; }
+    .corner-note .eyebrow { margin-bottom:13px; }
+    .corner-note h2 { margin:0; font-size:clamp(25px,3vw,34px); letter-spacing:-.05em; }
+    .corner-note > p { margin:0; color:var(--muted); font-size:12px; line-height:1.85; }
+    .practice { display:grid; grid-template-columns:1fr auto; gap:32px; align-items:center; margin-top:24px; padding:30px; border:1px solid #254330; background:#0b140e; }
     .practice h2 { margin:0 0 10px; font-size:25px; letter-spacing:-.04em; }
     .practice p { max-width:670px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
     .lap-count { color:var(--green); font:11px var(--mono); letter-spacing:.08em; white-space:nowrap; }
@@ -62,7 +66,8 @@
       .step-grid { grid-template-columns:1fr; }
       .step { min-height:0; }
       .step h3 { margin-top:16px; }
-      .practice { grid-template-columns:1fr; gap:18px; margin-top:28px; padding:22px; }
+      .corner-note { grid-template-columns:1fr; gap:13px; margin-top:28px; padding:22px; }
+      .practice { grid-template-columns:1fr; gap:18px; margin-top:18px; padding:22px; }
       .site-footer { min-height:100px; flex-wrap:wrap; padding-block:20px; }
     }
     @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
@@ -81,7 +86,7 @@
       <div>
         <p class="eyebrow">01 / THE FOUNDATION</p>
         <h1 id="page-title">Find your first <em>rhythm.</em></h1>
-        <p class="intro">Your first goal isn’t to set the fastest lap. It’s to make a few calm, repeatable laps. Once the car feels predictable, you can start building speed one small step at a time.</p>
+        <p class="intro">The fastest lap isn’t always made by driving with big aggression. Clean, consistent racing is the key: make the car predictable, then build speed one small step at a time.</p>
       </div>
       <div class="track-card">
         <svg viewBox="0 0 560 300" role="img" aria-label="A simple racing line showing a car moving from the outside of a corner to the inside and back out">
@@ -100,8 +105,9 @@
       <div class="step-grid">
         <article class="step"><span class="step-number">01 / LOOK AHEAD</span><h3>Look where you want to go</h3><p>Try to look toward the next part of the track instead of staring right in front of the car. This gives you more time to react.</p></article>
         <article class="step"><span class="step-number">02 / BRAKE IN A STRAIGHT LINE</span><h3>Slow down before the turn</h3><p>Choose a clear marker, like a board or a change in the barrier. Brake before the corner, then ease off as you turn in.</p></article>
-        <article class="step"><span class="step-number">03 / BE SMOOTH</span><h3>Make one clean turn</h3><p>Use the whole corner: start wide, move toward the inside near the middle, then let the car drift back out as you exit.</p></article>
+        <article class="step"><span class="step-number">03 / BE SMOOTH</span><h3>Make one clean turn</h3><p>A useful starting point is to begin wide, move toward the inside near the middle, then let the car run back out. The best line can change with the corners around it.</p></article>
       </div>
+      <aside class="corner-note" aria-labelledby="corner-note-title"><div><p class="eyebrow">READ THE WHOLE SECTION</p><h2 id="corner-note-title">Corners work together.</h2></div><p>The same turn can need a different line depending on what comes just before and after it. A previous corner may affect the side of the track you arrive from. If this turn leads onto a long straight, a later apex can help you get on the power sooner. If another turn follows quickly, you may need to give up a little space here to set up the next one. Look at the sequence, not just one corner at a time.</p></aside>
       <div class="practice"><div><h2>A simple first practice</h2><p>Drive five laps at a comfortable pace. For the first few, focus on staying on track. Then choose one corner and try to brake at the same marker each lap. If you make a mistake, reset and try again—every lap is useful practice.</p></div><span class="lap-count">5 CALM LAPS ✳</span></div>
     </section>
   </main>
