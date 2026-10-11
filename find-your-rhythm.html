@@ -48,16 +48,16 @@
     .practice h2 { margin:0 0 10px; font-size:25px; letter-spacing:-.04em; }
     .practice p { max-width:670px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
     .lap-count { color:var(--green); font:11px var(--mono); letter-spacing:.08em; white-space:nowrap; }
-    .game-link { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.72fr); align-items:center; gap:28px; overflow:hidden; min-height:300px; margin-top:38px; padding:38px 42px; border:1px solid #39854f; background:radial-gradient(ellipse at 88% 50%,#123c25 0,#0b1710 48%,#0a100c 82%); box-shadow:inset 0 0 70px #00e6760d; }
-    .game-link:before { position:absolute; top:0; left:0; width:6px; height:100%; background:var(--green); content:""; box-shadow:0 0 24px #00e67688; }
+    .game-link { position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(250px,.72fr); align-items:center; gap:28px; overflow:hidden; min-height:300px; margin-top:38px; padding:38px 42px; border:4px solid var(--green); background:#0b100c; box-shadow:none; }
+    .game-link:before { display:none; }
     .game-link-copy,.game-link-art { position:relative; z-index:1; }
     .game-link-tag { margin:0 0 13px; color:var(--green); font:10px var(--mono); letter-spacing:.14em; }
     .game-link h2 { max-width:620px; margin:0 0 12px; font-size:clamp(30px,4.5vw,52px); line-height:.98; letter-spacing:-.065em; }
     .game-link p { max-width:540px; margin:0 0 23px; color:var(--muted); font-size:13px; line-height:1.75; }
-    .game-link a { display:inline-flex; align-items:center; gap:14px; min-height:52px; padding:0 20px; background:var(--green); color:var(--bg); font:900 10px var(--mono); letter-spacing:.08em; box-shadow:0 8px 28px #00e67622; transition:transform .18s,background .18s; }
+    .game-link a { display:inline-flex; align-items:center; gap:14px; min-height:52px; padding:0 20px; background:var(--green); color:var(--bg); font:900 10px var(--mono); letter-spacing:.08em; box-shadow:none; transition:transform .18s,background .18s; }
     .game-link a:hover { transform:translateY(-2px); background:#55ffa7; }
     .game-link a svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-    .game-link-art svg { display:block; width:100%; overflow:visible; filter:drop-shadow(0 0 15px #00e67618); }
+    .game-link-art svg { display:block; width:100%; overflow:visible; filter:none; }
     .game-link-art .lab-track { fill:none; stroke:#48574b; stroke-width:19; stroke-linecap:round; stroke-linejoin:round; }
     .game-link-art .lab-highlight { fill:none; stroke:var(--green); stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:9 7; animation:lab-flow 9s linear infinite; }
     .game-link-art circle { fill:#08100b; stroke:var(--green); stroke-width:3; }
