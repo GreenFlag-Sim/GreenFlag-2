@@ -239,7 +239,6 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
     </button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#start">Start here</a>
-      <a href="#learn">What you’ll learn</a>
       <a href="#gear">Gear basics</a>
       <a href="feedback.html">Feedback</a>
       <a class="nav-cta" href="#start">Find your first lap <span aria-hidden="true"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 19 19 5M7 5h12v12"/></svg></span></span></a>
@@ -323,6 +322,11 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
 
   <footer class="site-footer shell"><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 205 100" focusable="false"><g fill="none" stroke="var(--green)" stroke-width="10" stroke-linecap="round"><path d="M20 25h65M6 51h78M20 77h65"/></g><path d="M100 16h92l-20 27 20 27h-92z" fill="var(--green)"/><path d="M111 25h16v16h-16zm32 0h16v16h-16zm-16 16h16v16h-16zm32 0h16v16h-16z" fill="var(--black)"/></svg></span><span>GREEN FLAG<span class="brand-sub">SIM RACING, START HERE</span></span></a><span>Made for the next generation of racers.</span><button type="button" id="back-to-top" class="back-top" aria-label="Back to top"><span class="icon-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V4M5 11l7-7 7 7"/></svg></span><span>BACK TO TOP</span></button></footer>
   <script>
+window.history.scrollRestoration = 'manual';
+window.addEventListener('load', () => {
+  if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, 0)));
+});
 document.querySelectorAll('[data-image-slot] img').forEach((image) => {
   const slot = image.closest('[data-image-slot]');
   const showImage = () => slot.classList.add('has-image');
