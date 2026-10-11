@@ -48,6 +48,11 @@
     .practice h2 { margin:0 0 10px; font-size:25px; letter-spacing:-.04em; }
     .practice p { max-width:670px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
     .lap-count { color:var(--green); font:11px var(--mono); letter-spacing:.08em; white-space:nowrap; }
+    .game-link { display:flex; align-items:center; justify-content:space-between; gap:22px; margin-top:24px; padding:22px 25px; border:1px solid var(--line); background:#0b100c; }
+    .game-link h2 { margin:0 0 7px; font-size:20px; letter-spacing:-.04em; }
+    .game-link p { margin:0; color:var(--muted); font-size:12px; line-height:1.7; }
+    .game-link a { flex:none; padding:14px 16px; background:var(--green); color:var(--bg); font:800 10px var(--mono); letter-spacing:.07em; }
+    .game-link a:hover { background:#32f28f; }
     .site-footer { min-height:88px; display:flex; align-items:center; justify-content:space-between; gap:18px; border-top:1px solid var(--line); color:var(--subtle); font-size:10px; }
     .site-footer a:hover { color:var(--green); }
     @media(max-width:700px) {
@@ -68,6 +73,7 @@
       .step h3 { margin-top:16px; }
       .corner-note { grid-template-columns:1fr; gap:13px; margin-top:28px; padding:22px; }
       .practice { grid-template-columns:1fr; gap:18px; margin-top:18px; padding:22px; }
+      .game-link { align-items:flex-start; flex-direction:column; padding:20px; }
       .site-footer { min-height:100px; flex-wrap:wrap; padding-block:20px; }
     }
     @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
@@ -110,6 +116,7 @@
       <aside class="corner-note" aria-labelledby="corner-note-title"><div><p class="eyebrow">READ THE WHOLE SECTION</p><h2 id="corner-note-title">Corners work together.</h2></div><p>The same turn can need a different line depending on what comes just before and after it. A previous corner may affect the side of the track you arrive from. If this turn leads onto a long straight, a later apex can help you get on the power sooner. If another turn follows quickly, you may need to give up a little space here to set up the next one. Look at the sequence, not just one corner at a time.</p></aside>
       <div class="practice"><div><h2>A simple first practice</h2><p>Drive five laps at a comfortable pace. For the first few, focus on staying on track. Then choose one corner and try to brake at the same marker each lap. If you make a mistake, reset and try again—every lap is useful practice.</p></div><span class="lap-count">5 CALM LAPS ✳</span></div>
     </section>
+    <section class="game-link" aria-labelledby="game-link-title"><div><h2 id="game-link-title">Ready to read the whole sequence?</h2><p>Try the corner-line challenge and see how the turn before and after can change your choice.</p></div><a href="corner-lines.html">PLAY THE MINI-GAME</a></section>
   </main>
   <footer class="site-footer shell"><span>Made for the next generation of racers.</span><a href="index.html">BACK TO GREEN FLAG</a></footer>
 </body>
