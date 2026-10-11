@@ -134,13 +134,14 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
 .next-inner h2 { font-size: 43px; }
 .next-inner > div > p:last-child { max-width: 410px; margin: 17px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
 
-.site-footer { min-height: 99px; position: relative; display: flex; align-items: center; justify-content: space-between; color: var(--subtle); font-size: 10px; }
-.footer-brand { color: var(--ink); font-size: 12px; }
+.site-footer { min-height: 99px; position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; color: var(--subtle); font-size: 10px; }
+.site-footer > span { grid-column: 2; grid-row: 1; justify-self: center; text-align: center; }
+.footer-brand { grid-column: 1; grid-row: 1; justify-self: start; color: var(--ink); font-size: 12px; }
 .footer-brand .brand-mark { width: 62px; height: 31px; }
 .footer-brand .brand-sub { font-size: 8px; }
 .back-top { position: fixed; z-index: 30; right: 24px; bottom: 24px; display: inline-flex; align-items: center; gap: 9px; padding: 12px 14px; border: 1px solid #455548; background: rgba(13,18,15,.96); color: var(--muted); font: 10px var(--mono); letter-spacing: .08em; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease, border-color .2s ease, color .2s ease, background .2s ease; backdrop-filter: blur(8px); }
 .back-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.back-top.is-docked { position: absolute; right: 0; bottom: 18px; }
+.back-top.is-docked { position: static; grid-column: 3; grid-row: 1; justify-self: end; opacity: 1; visibility: visible; transform: none; }
 .back-top .icon-arrow { width: 15px; height: 15px; color: var(--green); }
 .back-top:hover { border-color: var(--green); color: var(--green); }
 @media (prefers-reduced-motion: reduce) { .back-top { transition: none; } }
@@ -180,10 +181,9 @@ h1 em, h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 40
   .next-mark { width: 52px; height: 52px; }
   .next-inner h2 { font-size: 36px; }
   .site-footer { min-height: 120px; display: grid; grid-template-columns: 1fr auto; gap: 15px; padding-block: 24px; }
-  .site-footer > span { grid-column: 1/-1; grid-row: 2; }
-  .site-footer { min-height: 168px; padding-bottom: 78px; }
-  .back-top.is-docked { right: 0; bottom: 16px; }
+  .site-footer > span { grid-column: 1/-1; grid-row: 2; justify-self: center; text-align: center; }
   .footer-brand { grid-column: 1; grid-row: 1; }
+  .back-top.is-docked { grid-column: 2; grid-row: 1; justify-self: end; }
 }
 
 @media (max-width: 480px) {
@@ -347,8 +347,21 @@ const pageFooter = document.querySelector('.site-footer');
 const updateBackToTop = () => {
   const visible = window.scrollY > 320;
   const footerTop = pageFooter.getBoundingClientRect().top;
+  const shouldDock = visible && footerTop < window.innerHeight - 80;
   backTopButton.classList.toggle('is-visible', visible);
-  backTopButton.classList.toggle('is-docked', visible && footerTop < window.innerHeight - 80);
+  const isDocked = backTopButton.classList.contains('is-docked');
+  if (shouldDock !== isDocked) {
+    const before = backTopButton.getBoundingClientRect();
+    backTopButton.classList.toggle('is-docked', shouldDock);
+    const after = backTopButton.getBoundingClientRect();
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (visible && !reducedMotion && typeof backTopButton.animate === 'function') {
+      backTopButton.animate([
+        { transform: `translate(${before.left - after.left}px, ${before.top - after.top}px)` },
+        { transform: 'translate(0, 0)' }
+      ], { duration: 360, easing: 'cubic-bezier(.22,.7,.2,1)' });
+    }
+  }
 };
 window.addEventListener('scroll', updateBackToTop, { passive: true });
 window.addEventListener('resize', updateBackToTop);
